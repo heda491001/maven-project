@@ -10,7 +10,7 @@ pipeline {
         string( name:"tomcat-prod", defaultValue:"", description:"PROD server public ip" )
     }
     triggers{
-        pollSCM("*/1 * * * *")
+        pollSCM("H/3 * * * *")
     }
     stages{
         stage('Build'){
