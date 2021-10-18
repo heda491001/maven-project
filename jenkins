@@ -23,8 +23,19 @@ pipeline {
         }
         stage('deploy'){
             steps{
-                echo "code deploy"
+                timeout(time:5,unit:"DAYS"){
+                    input message:"Are u sure to deploy?"
+                }
+                echo "starting deploy"
                 build job:"udemy-deploy-to-STG"
+            }
+            post{
+                success{
+                    echo "deploy success"
+                }
+                failure{
+                    echo "deploy fail"
+                }
             }
         }
     }
