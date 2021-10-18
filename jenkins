@@ -1,8 +1,10 @@
 pipeline {
     agent any
+
     tools{
         maven "local--mvn"
     }
+
     parameters{
         string(name:"tomcat-dev",defaultValue:"13.112.125.170", description:"STG server public ip" )
         string( name:"tomcat-prod", defaultValue:"", description:"PROD server public ip" )
@@ -25,12 +27,17 @@ pipeline {
         stage("Deployments"){
             parallel{
                 stage("STG deploy"){
-                    sh "scp **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps"
+                    steps{
+                        sh "scp **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps"
+                    }
                 }
                 stage("PROD deploy"){
-                    // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat8/webapps"
+                    steps{
+                        // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat8/webapps"
+                    }
                 }
-            }
         }
     }
+    }
+
 }
