@@ -1,17 +1,21 @@
 pipeline {
     agent any
+    parameters{
+        string(name:"tomcat-dev",defaultValue:"13.112.125.170", description:"STG server public ip" )
+        string( name:"tomcat-prod", defaultValue:"", description:"PROD server public ip" )
+    }
+    triggers{
+        pullSCM("H/3 * * * *")
+    }
+
     tools{
         maven "local--mvn"
     }
+
+
     stages{
-        stage('Init'){
-            steps{
-                echo "Testing....."
-            }
-        }
         stage('Build'){
             steps {
-                echo "Building....."
                 sh 'mvn clean package'
             }
             post {
@@ -21,22 +25,16 @@ pipeline {
                 }
             }
         }
-        stage('deploy'){
-            steps{
-                timeout(time:5,unit:"DAYS"){
-                    input message:"Are u sure to deploy?"
-                }
-                echo "starting deploy"
-                build job:"udemy-deploy-to-STG"
+    stage("Deployments"){
+        parallel{
+            stage("STG deploy"){
+                sh "scp **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps"
             }
-            post{
-                success{
-                    echo "deploy success"
-                }
-                failure{
-                    echo "deploy fail"
-                }
+            stage("PROD deploy"){
+                // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat8/webapps"
             }
         }
+    }
+
     }
 }
