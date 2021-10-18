@@ -34,7 +34,7 @@ pipeline {
                 }
                 stage("PROD deploy"){
                     steps{
-                        sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat/webapps"
+                        sh "scp -i /var/lib/jenkins/.ssh/id_rsa **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat/webapps"
                     }
                 }
         }
