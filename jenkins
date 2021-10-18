@@ -24,8 +24,7 @@ pipeline {
                 }
             }
         }
-    }
-    stage("Deployments"){
+        stage("Deployments"){
             parallel{
                 stage("STG deploy"){
                     steps{
@@ -37,6 +36,7 @@ pipeline {
                         sh "scp -i /var/lib/jenkins/.ssh/id_rsa **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat/webapps"
                     }
                 }
+            }
         }
     }
 }
