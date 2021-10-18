@@ -10,7 +10,7 @@ pipeline {
         string( name:"tomcat-prod", defaultValue:"", description:"PROD server public ip" )
     }
     triggers{
-        pullSCM("H/3 * * * *")
+        pollSCM("H/3 * * * *")
     }
     stages{
         stage('Build'){
@@ -33,6 +33,7 @@ pipeline {
                 }
                 stage("PROD deploy"){
                     steps{
+                        echo "dummy"
                         // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat8/webapps"
                     }
                 }
