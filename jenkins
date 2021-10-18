@@ -30,8 +30,7 @@ pipeline {
                 stage("PROD deploy"){
                     // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat8/webapps"
                 }
+            }
         }
-    }
-
     }
 }
