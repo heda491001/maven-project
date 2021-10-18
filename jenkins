@@ -29,12 +29,12 @@ pipeline {
                 stage("STG deploy"){
                     steps{
                         sh "echo test"
-                        sh "scp -i /var/lib/jenkins/.ssh/id_rsa **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat/webapps"
+                        sh "/usr/bin/scp -i /var/lib/jenkins/.ssh/id_rsa **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat/webapps"
                     }
                 }
                 stage("PROD deploy"){
                     steps{
-                        sh "scp -i /var/lib/jenkins/.ssh/id_rsa **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat/webapps"
+                        sh "/usr/bin/scp -i /var/lib/jenkins/.ssh/id_rsa **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat/webapps"
                     }
                 }
             }
