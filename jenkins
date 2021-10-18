@@ -28,13 +28,13 @@ pipeline {
             parallel{
                 stage("STG deploy"){
                     steps{
-                        sh "scp **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps"
+                        sh "scp **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat/webapps"
                     }
                 }
                 stage("PROD deploy"){
                     steps{
                         echo "dummy"
-                        // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat8/webapps"
+                        // sh "scp **/target/*.war ec2-user@${params.tomcat-prod}:/var/lib/tomcat/webapps"
                     }
                 }
         }
