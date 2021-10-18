@@ -24,7 +24,8 @@ pipeline {
                 }
             }
         }
-        stage("Deployments"){
+    }
+    stage("Deployments"){
             parallel{
                 stage("STG deploy"){
                     steps{
@@ -39,6 +40,4 @@ pipeline {
                 }
         }
     }
-    }
-
 }
