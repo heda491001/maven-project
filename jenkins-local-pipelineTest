@@ -9,9 +9,9 @@ pipeline {
         string(name:"tomcat_dev",defaultValue:"13.112.125.170", description:"STG server public ip" )
         string( name:"tomcat_prod", defaultValue:"54.238.149.72", description:"PROD server public ip" )
     }
-    triggers{
-        pollSCM("H/3 * * * *")
-    }
+    // triggers{
+    //     pollSCM("H/3 * * * *")
+    // }
     stages{
         stage('Build'){
             steps {
