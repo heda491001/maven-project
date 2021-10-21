@@ -7,7 +7,16 @@ pipeline {
         stage ('build'){
             steps{
                 sh 'mvn clean package'
+            }
+        }
+        stage ('build docker image'){
+            steps{
                 sh "/usr/bin/docker -H tcp://localhost:2375 build . -t tomcatwebapp:${env.BUILD_ID}"
+            }
+        }
+        stage ('docker run'){
+            steps{
+                sh "/usr/bin/docker -H tcp://localhost:2375 run -p 9090:8080 tomcatwebapp:${env.BUILD_ID}"
             }
         }
     }
